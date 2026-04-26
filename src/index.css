@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Plate (slow + smooth) */
+@keyframes plateMove {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.plate-anim {
+  animation: plateMove 6s ease-in-out infinite;
+}
+
+/* Card (slight float only) */
+@keyframes cardFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.card-anim {
+  animation: cardFloat 4s ease-in-out infinite;
+}
+
+/* Hide scrollbar (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar (Firefox) */
+body {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar (IE/old Edge) */
+body {
+  -ms-overflow-style: none;
+}
