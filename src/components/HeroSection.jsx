@@ -7,7 +7,7 @@ import { GiOpenedFoodCan } from "react-icons/gi";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-row h-[calc(100vh-88px)]">
+    <div className="flex flex-row h-[calc(100vh-88px)] ">
       <div className="w-1/2 px-16 py-28 space-y-6">
         <span className="text-orange-500 font-bold text-5xl">Welcome to</span>
 

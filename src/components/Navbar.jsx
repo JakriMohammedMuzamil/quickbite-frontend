@@ -5,11 +5,18 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ cart, user, setUser, setShowLogin }) => {
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   return (
     <div className="h-22 flex justify-between items-center px-8 py-3 text-gray-500">
-      {/* Logo nav */}
-      <div className="flex-1 h-full ">
+
+      {/* Logo */}
+      <div className="flex-1 h-full">
         <img
           src={Logo}
           alt=""
@@ -17,8 +24,8 @@ const Navbar = () => {
         />
       </div>
 
-      {/*center nav*/}
-      <div className=" hidden md:flex items-center gap-4 font-medium  px-3 py-2 ">
+      {/* Center Nav */}
+      <div className="hidden md:flex items-center gap-4 font-medium px-3 py-2">
         {["Home", "Restaurants", "About Us", "Contact"].map((items) => {
           const path =
             items === "Home" ? "/" : `/${items.toLowerCase().replace(" ", "")}`;
@@ -35,7 +42,6 @@ const Navbar = () => {
                 >
                   {items}
 
-                  {/* dot indicator */}
                   <span
                     className={`absolute left-1/2 -translate-x-1/2 -bottom-0 w-1 h-1 rounded-full transition ${
                       isActive
@@ -50,27 +56,58 @@ const Navbar = () => {
         })}
       </div>
 
-      {/* Left Nav login cart */}
+      {/* Right Side */}
       <div className="flex-1 flex justify-end items-center gap-6">
-        {/* Desktop icons */}
+
         <div className="hidden md:flex items-center gap-6">
+
           <HiSearch
             size={20}
             className="cursor-pointer transform transition duration-200 hover:scale-125"
           />
-          <FaShoppingCart
-            size={20}
-            className="cursor-pointer transform transition duration-200 hover:scale-125"
-          />
-          <button className="bg-orange-400 rounded text-sm py-1 px-3 text-white font-semibold hover:bg-orange-500 transform transition duration-200 hover:scale-110">
-            Log In
-          </button>
+
+          {/* Cart */}
+          <NavLink to="/cart" className="relative">
+            <FaShoppingCart
+              size={20}
+              className="cursor-pointer transform transition duration-200 hover:scale-125"
+            />
+
+            {cart?.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1 rounded">
+                {cart.length}
+              </span>
+            )}
+          </NavLink>
+
+          {/* Login / Logout */}
+          {!user ? (
+            <button
+              onClick={() => setShowLogin(true)}
+              className="bg-orange-400 rounded text-sm py-1 px-3 text-white font-semibold hover:bg-orange-500 transform transition duration-200 hover:scale-110"
+            >
+              Log In
+            </button>
+          ) : (
+            <div className="flex items-center gap-3">
+              <span className="font-semibold">{user}</span>
+
+              <button
+                onClick={handleLogout}
+                className="text-red-500"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+
         </div>
 
-        {/* Mobile icon */}
+        {/* Mobile Menu */}
         <span className="md:hidden text-2xl cursor-pointer transform transition duration-200 hover:scale-125">
           <IoReorderThreeOutline size={30} />
         </span>
+
       </div>
     </div>
   );

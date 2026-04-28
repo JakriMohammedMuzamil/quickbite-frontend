@@ -1,17 +1,38 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import AppRoutes from './routings/AppRoutes'
-import Home from './pages/Home'
-import Footer from './components/Footer'
+import { useEffect, useState } from "react";
+import AppRoutes from "./routings/AppRoutes";
+import LoginModal from "./components/LoginModal";
 
 const App = () => {
-  return (
-    <div>
-      <Navbar/>
-      <AppRoutes />
-      <Footer/>
-    </div>
-  )
-}
+  const [cart, setCart] = useState(() => {
+    const stored = localStorage.getItem("cart");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-export default App
+  const [user, setUser] = useState(() => {
+    return localStorage.getItem("user") || null;
+  });
+
+  const [showLogin, setShowLogin] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+ return (
+  <>
+    <AppRoutes
+      cart={cart}
+      setCart={setCart}
+      user={user}
+      setUser={setUser}
+      setShowLogin={setShowLogin}
+    />
+
+    {showLogin && (
+      <LoginModal setUser={setUser} setShowLogin={setShowLogin} />
+    )}
+  </>
+);
+};
+
+export default App;
